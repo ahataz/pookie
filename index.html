@@ -263,9 +263,24 @@
             font-family: 'Georgia', serif;
         }
 
+        .success-message {
+            font-size: 42px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            font-family: 'Georgia', serif;
+            animation: fadeIn 1s ease;
+        }
+
         @media (max-width: 600px) {
             .valentine-text {
                 font-size: 32px;
+            }
+            
+            .success-message {
+                font-size: 28px;
             }
         }
     </style>
@@ -505,6 +520,12 @@
             
             // Hide buttons
             buttonContainer.classList.add('hidden');
+            
+            // Show success message
+            const successMsg = document.createElement('div');
+            successMsg.className = 'success-message';
+            successMsg.textContent = 'Good choice (and the only one)';
+            body.appendChild(successMsg);
         }
     </script>
 </body>
