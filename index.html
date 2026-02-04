@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #FFB6C1;
+            transition: background-color 0.6s ease;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        body.purple {
+            background-color: #9370DB;
+        }
+
+        .cat-container {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cat-image {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .cat-image:hover {
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            position: relative;
+            min-height: 80px;
+        }
+
+        button {
+            padding: 18px 45px;
+            font-size: 22px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #noBtn {
+            position: absolute;
+            left: 50%;
+            transform: translateX(50%);
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c92a6e 100%);
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(201, 42, 110, 0.4);
+        }
+
+        #noBtn {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+        }
+
+        #noBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(127, 140, 141, 0.4);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            .cat-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            button {
+                padding: 15px 35px;
+                font-size: 18px;
+            }
+
+            .buttons {
+                gap: 20px;
+            }
+        }
+
+        .message {
+            font-size: 32px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f0f;
+            position: absolute;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 30px;
+            animation: float-up 4s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50vh) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
+            animation: sparkle 1.5s ease-out forwards;
+            pointer-events: none;
+            box-shadow: 0 0 10px white;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(180deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cat-container">
+        <img src="kot1.jpg" alt="Cat 1" class="cat-image" id="kot1">
+        <img src="kot2.jpg" alt="Cat 2" class="cat-image" id="kot2">
+        <img src="kot3.jpg" alt="Cat 3" class="cat-image hidden" id="kot3">
+        <img src="kot4.jpg" alt="Cat 4" class="cat-image hidden" id="kot4">
+        <img src="kot5.jpg" alt="Cat 5" class="cat-image hidden" id="kot5">
+    </div>
+
+    <div class="buttons" id="buttonContainer">
+        <button id="yesBtn">Yes 💖</button>
+        <button id="noBtn">No 🙄</button>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const buttonContainer = document.getElementById('buttonContainer');
+        const body = document.body;
+
+        const kot1 = document.getElementById('kot1');
+        const kot2 = document.getElementById('kot2');
+        const kot3 = document.getElementById('kot3');
+        const kot4 = document.getElementById('kot4');
+        const kot5 = document.getElementById('kot5');
+
+        let noBtnClicked = false;
+
+        // Make No button run away on hover
+        noBtn.addEventListener('mouseenter', function() {
+            if (!noBtnClicked) {
+                const randomX = Math.random() * (window.innerWidth - 200) - (window.innerWidth / 2 - 100);
+                const randomY = Math.random() * 200 - 100;
+                noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            }
+        });
+
+        yesBtn.addEventListener('click', function() {
+            createConfetti();
+            createHearts();
+            createSparkles();
+            setTimeout(function() {
+                showYesPage();
+            }, 500);
+        });
+
+        function createConfetti() {
+            const colors = ['#ff6b9d', '#c92a6e', '#9370DB', '#FFB6C1', '#ff1493', '#ffd700', '#00ff00', '#00bfff'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(function() {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.top = '-10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+                    body.appendChild(confetti);
+                    
+                    setTimeout(function() {
+                        confetti.remove();
+                    }, 4000);
+                }, i * 20);
+            }
+        }
+
+        function createHearts() {
+            const heartEmojis = ['💖', '💕', '💗', '💓', '💝', '❤️', '💜', '💙'];
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(function() {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.bottom = '0px';
+                    heart.style.animationDelay = (Math.random() * 0.5) + 's';
+                    body.appendChild(heart);
+                    
+                    setTimeout(function() {
+                        heart.remove();
+                    }, 4000);
+                }, i * 100);
+            }
+        }
+
+        function createSparkles() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(function() {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = Math.random() * window.innerWidth + 'px';
+                    sparkle.style.top = Math.random() * window.innerHeight + 'px';
+                    body.appendChild(sparkle);
+                    
+                    setTimeout(function() {
+                        sparkle.remove();
+                    }, 1500);
+                }, i * 30);
+            }
+        }
+
+        noBtn.addEventListener('click', function() {
+            if (!noBtnClicked) {
+                noBtnClicked = true;
+                
+                // Change background to purple
+                body.classList.add('purple');
+                
+                // Hide initial cats
+                kot1.classList.add('hidden');
+                kot2.classList.add('hidden');
+                
+                // Show kot5
+                kot5.classList.remove('hidden');
+                
+                // Hide buttons
+                buttonContainer.classList.add('hidden');
+                
+                // Show message
+                const message = document.createElement('div');
+                message.className = 'message';
+                message.textContent = 'In Polish No means YES, SIKEEE';
+                body.appendChild(message);
+                
+                // After 2 seconds, show the Yes page
+                setTimeout(function() {
+                    message.remove();
+                    kot5.classList.add('hidden');
+                    createConfetti();
+                    createHearts();
+                    createSparkles();
+                    setTimeout(function() {
+                        showYesPage();
+                    }, 500);
+                }, 2500);
+            }
+        });
+
+        function showYesPage() {
+            // Change background to purple
+            body.classList.add('purple');
+            
+            // Hide all other cats
+            kot1.classList.add('hidden');
+            kot2.classList.add('hidden');
+            kot5.classList.add('hidden');
+            
+            // Show kot3 and kot4
+            kot3.classList.remove('hidden');
+            kot4.classList.remove('hidden');
+            
+            // Hide buttons
+            buttonContainer.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
